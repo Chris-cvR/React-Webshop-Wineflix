@@ -22,10 +22,25 @@ body {
   color: #373737!important;
 }
 
-#flex-container {
-    display:flex;
-    flex-wrap: wrap;
-}
+#grid-container {
+    display:grid;
+    grid-template-columns: repeat(3, 1fr); /* adjusts the number of columns to 3 */
+    gap: 1rem; /* adds a gap between grid items */
+  }
+
+  @media (max-width: 768px) {
+    #grid-container {
+      grid-template-columns: repeat(2, 1fr); /* for smaller screens, display 2 elements per row */
+      margin-left:-1em;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    #grid-container {
+      grid-template-columns: 1fr; /* for even smaller screens, display 1 element per row */
+      margin-left:-1em;
+    }
+  }
 
 .card {
     margin: auto auto 1em 1em;

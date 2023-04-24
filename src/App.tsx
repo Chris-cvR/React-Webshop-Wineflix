@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Carousel from "./components/Carousel"
+import Test from "./components/Test"
 import Login from "./components/Login";
 import catalogue from "./components/Catalogue";
 
@@ -16,7 +16,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path='/' Component={Home}></Route>
-          <Route path='/test' element={<Carousel endpoint={"api/products/category/red"}></Carousel>}></Route>
+          <Route path='/test' element={<Test endpoint={"api/products/category/red"}></Test>}></Route>
           <Route path='/login' Component={Login}></Route>
           <Route path='/catalogue' Component={catalogue}></Route>
         </Routes>

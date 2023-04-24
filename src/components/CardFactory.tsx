@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
 
-function Carousel({ endpoint }: { endpoint: string }) {
+function CardFactory({ endpoint }: { endpoint: string }) {
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
   
@@ -31,7 +28,7 @@ function Carousel({ endpoint }: { endpoint: string }) {
   }
 
   return (
-    <OwlCarousel className="owl-theme" loop margin={10} nav>
+    <div id='grid-container'>
       {products.map((product: { id: any; image: any; name: any; price: any; description: any; }) => {
         const { id, image, name, price, description } = product;
 
@@ -57,8 +54,8 @@ function Carousel({ endpoint }: { endpoint: string }) {
           </div>
         );
       })}
-    </OwlCarousel>
+    </div>
   );
 }
 
-export default Carousel;
+export default CardFactory;

@@ -1,3 +1,5 @@
+import CardFactory from "./CardFactory";
+
 function catalogue() {
     const Reset = () => {
       // function body here
@@ -54,7 +56,7 @@ function catalogue() {
             </div>
           </div>
         </div>
-        <div id="flex-container"></div>
+        <CardFactory endpoint="api/products"></CardFactory>
       </div>
     );
   }

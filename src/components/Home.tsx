@@ -1,4 +1,8 @@
-import Carousel from "./Carousel"
+import CardFactory from "./CardFactory"
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
+
 
 function Home() {
     return (
@@ -111,7 +115,9 @@ function Home() {
 
   
       <div className="container mx-auto mt-5 mb-5">
-      <Carousel endpoint="api/products/category/red"></Carousel>
+      <OwlCarousel className="owl-theme" loop margin={10} nav>
+      <CardFactory endpoint="api/products/category/red"></CardFactory>
+      </OwlCarousel>
       </div>
   
       <div className="container mx-auto mt-5 mb-5">
@@ -122,7 +128,9 @@ function Home() {
       </div>
   
       <div className="container mx-auto mt-5 mb-5">
-      <Carousel endpoint="api/products/category/white"></Carousel>
+      <OwlCarousel className="owl-theme" loop margin={10} nav>
+      <CardFactory endpoint="api/products/category/white"></CardFactory>
+      </OwlCarousel>
       </div>
   
       <div
