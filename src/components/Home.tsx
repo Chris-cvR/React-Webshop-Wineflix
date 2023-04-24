@@ -1,4 +1,6 @@
 import CardFactory from "./CardFactory"
+import { NavLink } from 'react-router-dom'
+
 
 function Home() {
     return (
@@ -10,8 +12,8 @@ function Home() {
               Wine delivered to your door.
               <div style={{ color: "#9D2626" }}>Cheers to that!</div>
             </h1>
-            <a
-              href="./catalogue.html"
+            <NavLink
+              to="/catalogue"
               className="btn px-5 py-3 text-white mt-3 mt-sm-0"
               style={{
                 borderRadius: "0",
@@ -19,7 +21,7 @@ function Home() {
               }}
             >
               SEE PRODUCTS
-            </a>
+            </NavLink>
           </div>
   
           <div
