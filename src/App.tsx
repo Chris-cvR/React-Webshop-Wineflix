@@ -16,10 +16,9 @@ function App() {
         <Navbar />
         <Routes>
           <Route path='/' Component={Home}></Route>
-          <Route path='/test' element={<Carousel endpoint={"api/products/category/red"}></Carousel>}>
+          <Route path='/test' element={<Carousel endpoint={"api/products/category/red"}></Carousel>}></Route>
           <Route path='/login' Component={Login}></Route>
-        <Route path='/catalogue' Component={catalogue}></Route>
-          </Route>
+          <Route path='/catalogue' Component={catalogue}></Route>
         </Routes>
         <Footer />
       </BrowserRouter>
