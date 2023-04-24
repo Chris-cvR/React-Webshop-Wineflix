@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom'
+
 function Navbar() {
     return (
   <nav className="navbar navbar-expand-lg navbar-light primary py-3 border border-secondary">
@@ -13,10 +15,10 @@ function Navbar() {
 
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a className="nav-link active" href="./index.html">Home</a>
+          <NavLink className="nav-link" to="/">Home</NavLink>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="./catalogue.html">Products</a>
+          <NavLink className="nav-link" to="/catalogue">Products</NavLink>
           </li>
         </ul>
       </div>
@@ -48,7 +50,7 @@ function Navbar() {
                 
                 </svg>
               <li className="nav-item" >
-                <a id="messagename" className="nav-link" href="./login.html">Log in</a>
+              <NavLink className="nav-link" to="/login">Log in</NavLink>
               </li>
             </ul>
   
