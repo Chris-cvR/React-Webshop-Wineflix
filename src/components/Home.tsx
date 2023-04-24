@@ -1,3 +1,5 @@
+import Carousel from "./Carousel"
+
 function Home() {
     return (
     <div>
@@ -106,9 +108,10 @@ function Home() {
           <b>Newest Products:</b>{" "}
         </h3>
       </div>
+
   
       <div className="container mx-auto mt-5 mb-5">
-        <div className="owl-carousel" id="carousel-1"></div>
+      <Carousel endpoint="api/products/category/red"></Carousel>
       </div>
   
       <div className="container mx-auto mt-5 mb-5">
@@ -119,7 +122,7 @@ function Home() {
       </div>
   
       <div className="container mx-auto mt-5 mb-5">
-        <div className="owl-carousel" id="carousel-2"></div>
+      <Carousel endpoint="api/products/category/white"></Carousel>
       </div>
   
       <div
