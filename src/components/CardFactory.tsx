@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import OwlCarousel from 'react-owl-carousel';
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import { NavLink } from 'react-router-dom'
+
 
 
 function CardFactory({ endpoint, carousel }: { endpoint: string, carousel: boolean }) {
@@ -40,12 +42,12 @@ function CardFactory({ endpoint, carousel }: { endpoint: string, carousel: boole
           return (
             <div key={id} className="card">
               <div className="card-body">
-                <a style={{ textDecoration: 'none' }} href={`./product?id=${id}`}>
+              <NavLink className="nav-link" to={`/product/${id}`}>
                   <div>
                     <img className="mb-5" src={`${image}`} alt={`${name}`} />
                     <h5 className="card-title">{`${name}`}</h5>
                   </div>
-                </a>
+                  </NavLink>
                 <h5 className="card-price">{`${price}`} DKK</h5>
                 <div className="card-text">{`${description}`}</div>
                 <button
