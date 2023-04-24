@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import OwlCarousel from 'react-owl-carousel';
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 
-function CardFactory({ endpoint }: { endpoint: string }) {
+
+function CardFactory({ endpoint, carousel }: { endpoint: string, carousel: boolean }) {
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
   
@@ -27,9 +31,38 @@ function CardFactory({ endpoint }: { endpoint: string }) {
     throw new Error('Function not implemented.');
   }
 
-  return (
+
+  return carousel ? (
+    <OwlCarousel className="owl-theme" loop margin={10} nav>
+        {products.map((product: any) => {
+          const { id, image, name, price, description } = product;
+
+          return (
+            <div key={id} className="card">
+              <div className="card-body">
+                <a style={{ textDecoration: 'none' }} href={`./product?id=${id}`}>
+                  <div>
+                    <img className="mb-5" src={`${image}`} alt={`${name}`} />
+                    <h5 className="card-title">{`${name}`}</h5>
+                  </div>
+                </a>
+                <h5 className="card-price">{`${price}`} DKK</h5>
+                <div className="card-text">{`${description}`}</div>
+                <button
+                  className="basket-button"
+                  onClick={() => addToCart(id)}
+                  data-pid={id}
+                >
+                  Add to basket
+                </button>
+              </div>
+            </div>
+          );
+        })}
+    </OwlCarousel>
+  ) : (
     <div id='grid-container'>
-      {products.map((product: { id: any; image: any; name: any; price: any; description: any; }) => {
+      {products.map((product: any) => {
         const { id, image, name, price, description } = product;
 
         return (
@@ -37,7 +70,7 @@ function CardFactory({ endpoint }: { endpoint: string }) {
             <div className="card-body">
               <a style={{ textDecoration: 'none' }} href={`./product?id=${id}`}>
                 <div>
-                  <img className="mb-5" src={`${image}`} />
+                  <img className="mb-5" src={`${image}`} alt={`${name}`} />
                   <h5 className="card-title">{`${name}`}</h5>
                 </div>
               </a>

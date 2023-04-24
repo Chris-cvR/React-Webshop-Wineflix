@@ -115,9 +115,7 @@ function Home() {
 
   
       <div className="container mx-auto mt-5 mb-5">
-      <OwlCarousel className="owl-theme" loop margin={10} nav>
-      <CardFactory endpoint="api/products/category/red"></CardFactory>
-      </OwlCarousel>
+      <CardFactory carousel={true} endpoint="api/products/category/red"></CardFactory>
       </div>
   
       <div className="container mx-auto mt-5 mb-5">
@@ -128,9 +126,7 @@ function Home() {
       </div>
   
       <div className="container mx-auto mt-5 mb-5">
-      <OwlCarousel className="owl-theme" loop margin={10} nav>
-      <CardFactory endpoint="api/products/category/white"></CardFactory>
-      </OwlCarousel>
+      <CardFactory carousel={true} endpoint="api/products/category/white"></CardFactory>
       </div>
   
       <div

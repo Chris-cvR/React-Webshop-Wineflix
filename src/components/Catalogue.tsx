@@ -56,7 +56,7 @@ function catalogue() {
             </div>
           </div>
         </div>
-        <CardFactory endpoint="api/products"></CardFactory>
+        <CardFactory carousel={false} endpoint="api/products"></CardFactory>
       </div>
     );
   }
