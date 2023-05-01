@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Product from "./components/Product"
 import Login from "./components/Login";
-import catalogue from "./components/Catalogue";
+import Catalogue from "./components/Catalogue";
 
 
 function App() {
@@ -15,9 +15,9 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path='/' Component={Home}></Route>
-          <Route path='/login' Component={Login}></Route>
-          <Route path='/catalogue' Component={catalogue}></Route>
+          <Route path='/' element={<Home></Home>}></Route>
+          <Route path='/login' element={<Login></Login>}></Route>
+          <Route path='/catalogue' element={<Catalogue></Catalogue>}></Route>
           <Route path='/product/:id' element={<Product></Product>}></Route>
 
         </Routes>

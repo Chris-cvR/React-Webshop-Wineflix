@@ -70,12 +70,12 @@ function CardFactory({ endpoint, carousel }: { endpoint: string, carousel: boole
         return (
           <div key={id} className="card">
             <div className="card-body">
-              <a style={{ textDecoration: 'none' }} href={`./product?id=${id}`}>
+            <NavLink className="nav-link" to={`/product/${id}`}>
                 <div>
                   <img className="mb-5" src={`${image}`} alt={`${name}`} />
                   <h5 className="card-title">{`${name}`}</h5>
                 </div>
-              </a>
+              </NavLink>
               <h5 className="card-price">{`${price}`} DKK</h5>
               <div className="card-text">{`${description}`}</div>
               <button
