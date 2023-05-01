@@ -15,39 +15,6 @@ async function readProducts() {
   }
 }
 
-router.get('/api/products/:attribute/:value', async (req, res) => {
-  const { attribute, value } = req.params;
-
-  try {
-    const products = await readProducts();
-
-    const product = products.filter((wine) => {
-      if (typeof wine[attribute] === 'number') {
-        return wine[attribute] === parseInt(value, 10);
-      } else if (typeof wine[attribute] === 'string') {
-        return wine[attribute].toLowerCase().includes(value.toLowerCase());
-      }
-    });
-
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found'});
-    }
-
-    res.json(product);
-  } catch (error) {
-    res.status(500).json({ message: 'Error reading products file'});
-  }
-});
-
-router.get('/api/products/', async (req, res) => {
-  try {
-    const products = await readProducts();
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ message: 'Error reading products file'});
-  }
-});
-
 router.post('/api/products', async (req, res) => {
   try {
     const products = await readProducts();
@@ -72,19 +39,48 @@ router.post('/api/products', async (req, res) => {
   }
 });
 
-router.get('/api/products/:attribute/', async (req, res) => {
-  const { attribute } = req.params;
+
+
+router.get('/api/products', async (req, res) => {
+  const { ...filterAttributes } = req.query;
 
   try {
     const products = await readProducts();
 
-    const values = [...new Set(products.map((product) => product[attribute]))];
-    
-    res.json(values);
+    const filteredProducts = products.filter((wine) => {
+      for (let [key, value] of Object.entries(filterAttributes)) {
+        if(typeof wine[key] === 'undefined') {
+          return false;
+        }
+        if (key === 'year') {
+          if (wine.year !== parseInt(value, 10)) {
+            return false;
+          }
+        } else if (typeof wine[key] === 'number') {
+          if (wine[key] !== parseInt(value, 10)) {
+            return false;
+          }
+        } else if (typeof wine[key] === 'string') {
+          if (!wine[key].toLowerCase().includes(value.toLowerCase())) {
+            return false;
+          }
+        } else {
+          // unsupported type
+          return false;
+        }
+      }
+      return true;
+    });
+
+    if (filteredProducts.length === 0) {
+      return res.status(404).json({ message: 'Product not found'});
+    }
+
+    res.json(filteredProducts);
   } catch (error) {
-    res.status(500).json({ message: 'Error reading products file'});
+    console.error('Error filtering products', error);
+    res.status(500).json({ message: 'Error filtering products'});
   }
 });
-
 
 module.exports = router;
