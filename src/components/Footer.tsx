@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 function Footer() {
     return (
         <footer className="text-center text-lg-start text-muted vw-100 primary">
@@ -20,13 +22,13 @@ function Footer() {
               <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                 <h6 className="fw-bold mb-4 text">Top three Red Wines:</h6>
                 <p>
-                  <a href="http://127.0.0.1:5500/product.html?id=122" className="text-reset accent-text">Three Men in a Tub</a>
+                  <NavLink className="text-reset accent-text" to="/product/122">Three Men in a Tub</NavLink>
                 </p>
                 <p>
-                  <a href="http://127.0.0.1:5500/product.html?id=130" className="text-reset accent-text">Juno Shiraz - Mourvedre</a>
+                  <NavLink className="text-reset accent-text" to="/product/130">Juno Shiraz - Mourvedre</NavLink>
                 </p>
                 <p>
-                  <a href="http://127.0.0.1:5500/product.html?id=3" className="text-reset accent-text">Touch of Oak Pinotage</a>
+                  <NavLink className="text-reset accent-text" to="/product/3">Touch of Oak Pinotage</NavLink>
                 </p>
               </div>
   
