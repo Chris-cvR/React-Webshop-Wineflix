@@ -215,7 +215,10 @@ function viewCart() {
 }
 
 window.addEventListener("DOMContentLoaded", (event) => {
-  document.getElementById("cart").addEventListener("click", function () {
-    fetchCart();
-  });
+  let cartBtn = document.getElementById("cart");
+  if (cartBtn) {
+    cartBtn.addEventListener("click", function () {
+      fetchCart();
+    });
+  }
 });
