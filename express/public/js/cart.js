@@ -5,7 +5,7 @@ async function fetchCart() {
   let user_cart = {}
 
   try {
-    const response = await fetch(`/api/cart/${id}`);
+    const response = await fetch(`localhost:8888/api/cart/${id}`);
     if (response.ok) {
       const data = await response.json();
       user_cart = data;
@@ -13,6 +13,7 @@ async function fetchCart() {
       console.error('API request failed with status:', response.status);
       // Handle error condition here
     }
+
   } catch (error) {
     console.error('Error fetching cart data', error);
     // Handle error condition here
@@ -68,7 +69,7 @@ async function addToCart(product_id) {
   };
   
   try {
-    const response = await fetch(`/api/cart/${id}`);
+    const response = await fetch(`localhost:8888/api/cart/${id}`);
     if (response.ok) {
       const data = await response.json();
       cart = data;
@@ -109,7 +110,7 @@ async function addToCart(product_id) {
       })
     );
 
-    fetch(`/api/cart/${id}`, {
+    fetch(`localhost:8888/api/cart/${id}`, {
       method: 'POST',
       body: JSON.stringify({
         product_data: cart.product_data,
@@ -149,7 +150,7 @@ async function removeFromCart(product_id) {
   let productPrice = 0;
 
   try {
-    const response = await fetch(`/api/cart/${user_id}`);
+    const response = await fetch(`localhost:8888/api/cart/${user_id}`);
     if (response.ok) {
       const cart = await response.json();
       for (let i = 0; i < cart.product_data.length; i++) {
@@ -175,7 +176,7 @@ async function removeFromCart(product_id) {
           updatedCartData.total = cart.total - productPrice;
         }
 
-        const updateResponse = await fetch(`/api/cart/${user_id}`, {
+        const updateResponse = await fetch(`localhost:8888/api/cart/${user_id}`, {
           method: 'PUT',
           body: JSON.stringify(updatedCartData),
           headers: {
