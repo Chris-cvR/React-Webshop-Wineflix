@@ -113,7 +113,7 @@ function Home() {
 
   
       <div className="container mx-auto mt-5 mb-5">
-      <CardFactory carousel={true} endpoint="api/products/category/red"></CardFactory>
+      <CardFactory carousel={true} endpoint="api/products?category=red"></CardFactory>
       </div>
   
       <div className="container mx-auto mt-5 mb-5">
@@ -124,7 +124,7 @@ function Home() {
       </div>
   
       <div className="container mx-auto mt-5 mb-5">
-      <CardFactory carousel={true} endpoint="api/products/category/white"></CardFactory>
+      <CardFactory carousel={true} endpoint="api/products/?category=white"></CardFactory>
       </div>
   
       <div

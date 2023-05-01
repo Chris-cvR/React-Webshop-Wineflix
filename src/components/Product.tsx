@@ -9,7 +9,7 @@ function Product() {
   
     useEffect(() => {
       const fetchData = async (id: any): Promise<any> => {
-        const response = await fetch(`http://localhost:8888/api/products/id/${id}`);
+        const response = await fetch(`http://localhost:8888/api/products/?id=${id}`);
         const data = await response.json();
         return data;
       }
@@ -59,7 +59,7 @@ function Product() {
             </div>
             <div className="container mx-auto mt-5 mb-5">
               <h3><b>Alternative Products:</b></h3>
-              <CardFactory carousel={true} endpoint={"api/products/category/white"} />
+              <CardFactory carousel={true} endpoint={"api/products?category=white"} />
             </div>
           </div>
         );
