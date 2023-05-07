@@ -42,6 +42,11 @@ body {
     }
   }
 
+  .owl-carousel .owl-item img {
+    min-height: 213px;
+    min-width: 213px;
+  }
+
 .card {
     margin: auto auto 1em 1em;
 }
