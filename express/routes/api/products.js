@@ -44,6 +44,10 @@ router.post('/api/products', async (req, res) => {
 router.get('/api/products', async (req, res) => {
   const { ...filterAttributes } = req.query;
 
+  if (filterAttributes.year && Array.isArray(filterAttributes.year)) {
+    return res.json([]);
+  }
+
   try {
     const products = await readProducts();
 

@@ -400,7 +400,7 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
           ) : (
             <div>
             <div className="container mx-auto mt-5 mb-5">
-            <p id="error-message">No products match your criteria! But don't worry, here's some inspiration:</p>
+            <p id="error-message">No products match your criteria!</p>
             
             </div>
             </div>
