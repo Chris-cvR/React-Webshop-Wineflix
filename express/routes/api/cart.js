@@ -47,7 +47,7 @@ router.get('/api/cart/', async (req, res) => {
   
       const newCartData = req.body;
   
-      const requiredKeys = ['product_data', 'count', 'total'];
+      const requiredKeys = ['product_data', 'firstname', 'lastname', 'count', 'total'];
       const missingKeys = requiredKeys.filter((key) => !(key in newCartData));
   
       if (missingKeys.length > 0) {
