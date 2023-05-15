@@ -55,10 +55,10 @@ function Login(){
       const onSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const isValid = validate();
-        if (isValid) {
-          Submit();
+        if (!isValid) {
+          alert('invalid input') 
         }
-        else alert('invalid input') 
+        else alert() 
         
     
       };
