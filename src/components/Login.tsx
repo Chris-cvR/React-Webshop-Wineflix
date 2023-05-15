@@ -23,7 +23,7 @@ function Login(){
     const handleInputChange = (event : React.ChangeEvent<HTMLInputElement>) =>{
       const name = event.target.id;
       const value = event.target.value;
-      setState((prev) => ({ ...prev, ...{ [name]: value } }));
+      setState1((prev) => ({ ...prev, ...{ [name]: value } }));
     };
     
     const validate = () => {
