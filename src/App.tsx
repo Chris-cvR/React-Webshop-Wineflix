@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, createContext } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from "./components/Home";
@@ -7,6 +7,17 @@ import Footer from "./components/Footer";
 import Product from "./components/Product"
 import Login from "./components/Login";
 import Catalogue from "./components/Catalogue";
+import  {userContext, user} from './context/Usercontext';
+
+export const UserContext = createContext<userContext>({
+  user: { firstname :"" , lastname: "", email: ""},
+
+updateUser : () => {},
+});
+
+
+
+
 
 
 function App() {
