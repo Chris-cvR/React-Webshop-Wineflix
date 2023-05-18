@@ -80,10 +80,7 @@ function Login(){
         tried to send data via the post method below.  */}
 
       {/*  Created a usercontext file that can update the user by the same attributes as in the post request. 
-    But dont think it matches the way our json is setup. The example i saw of this the email, name and lastname where all attributes in the basket. 
-    Meaning thye where on the same level.
-  our json is set up where the email is a level above the other attributes. I think that is why it is not working
-dont know how to set it up to match ours. Maybe it just doesnt work and needs to be made in a different way. */}
+    But dont think it matches the way our json is setup. Maybe it just doesnt work and needs to be made in a different way. */}
       
       
       const defaultContext = useContext(UserContext);
@@ -108,7 +105,7 @@ dont know how to set it up to match ours. Maybe it just doesnt work and needs to
 
       {/* Had to use react-bootstrap elements to make it work. 
     This has changed the way it looks. will make it prettier when everything else works. 
-  Validation works */}
+  Validation works. But nothing happens currently when you rty to login */}
 
     return (
 
@@ -158,6 +155,27 @@ dont know how to set it up to match ours. Maybe it just doesnt work and needs to
 }
 
 export default Login;
+
+
+/* Original login
+<div className="container w-50 mx-auto mt-5 mb-5">
+<p><i className="fas fa-home me-3"></i> Welcome, it’s nice to see you...</p>
+
+<form onSubmit={onSubmit} >
+<div className="mb-3">
+    <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
+    <input type="name" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+  </div>
+  <div className="mb-3">
+    <label htmlFor="exampleInputEmail1" className="form-label">First name</label>
+    <input type="name" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+  </div>
+  <div className="mb-3">
+    <label htmlFor="exampleInputPassword1" className="form-label">Last name</label>
+    <input type="name" className="form-control" id="exampleInputPassword1"/> 
+  </div>
+  <button type="submit" className="btn btn-primary" >Submit</button> 
+  <button type="reset" className="btn btn-danger">Cancel</button></form></div> */
 
 
 
