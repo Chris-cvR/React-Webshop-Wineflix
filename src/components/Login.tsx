@@ -1,6 +1,8 @@
-import React, { useContext, useState } from 'react';
-import { UserContext } from '../context/Usercontext'
-import * as Rb from 'react-bootstrap';
+import React, { useContext, useState } from "react";
+import { UserContext } from "../context/Usercontext";
+import * as Rb from "react-bootstrap";
+import { Row, Col, Button, Form } from "react-bootstrap";
+import "../App.css";
 
 interface FormData {
   firstname: string;
@@ -15,17 +17,16 @@ interface FormErrors {
 }
 
 function Login() {
-
   const [state1, setState1] = React.useState<FormData>({
-    firstname: '',
-    lastname: '',
-    email: ''
+    firstname: "",
+    lastname: "",
+    email: "",
   });
   const [errors, setErrors] = React.useState<FormErrors>({});
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
-    setState1(prevState => ({ ...prevState, [id]: value }));
+    setState1((prevState) => ({ ...prevState, [id]: value }));
   };
 
   const validate = () => {
@@ -34,19 +35,19 @@ function Login() {
     const regEmail: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
     if (!state1.firstname) {
-      vErrors.firstname = 'Required';
+      vErrors.firstname = "Required";
     } else if (!regString.test(state1.firstname)) {
-      vErrors.firstname = 'Must be letters';
+      vErrors.firstname = "Must be letters";
     }
     if (!state1.lastname) {
-      vErrors.lastname = 'Required';
+      vErrors.lastname = "Required";
     } else if (!regString.test(state1.lastname)) {
-      vErrors.lastname = 'Must be letters';
+      vErrors.lastname = "Must be letters";
     }
     if (!state1.email) {
-      vErrors.email = 'Required';
+      vErrors.email = "Required";
     } else if (!regEmail.test(state1.email)) {
-      vErrors.email = 'Must be a valid email';
+      vErrors.email = "Must be a valid email";
     }
     setErrors(vErrors);
     return !vErrors.firstname && !vErrors.firstname && !vErrors.email;
@@ -55,18 +56,20 @@ function Login() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const isValid = validate();
-    
+
     if (isValid) {
       try {
-        const response = await fetch(`http://localhost:8888/api/cart/${state1.email}`);
-        
+        const response = await fetch(
+          `http://localhost:8888/api/cart/${state1.email}`
+        );
+
         if (response.status === 404) {
           try {
             await fetch(`http://localhost:8888/api/cart/${state1.email}`, {
-              method: 'POST',
+              method: "POST",
               headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
+                Accept: "application/json",
+                "Content-Type": "application/json",
               },
               body: JSON.stringify({
                 email: state1.email,
@@ -74,10 +77,10 @@ function Login() {
                 lastname: state1.lastname,
                 product_data: [],
                 total: 0,
-                count: 0
-              })
+                count: 0,
+              }),
             });
-            
+
             // Update the user context for a new cart
             defaultContext.updateUser({
               email: state1.email,
@@ -85,16 +88,14 @@ function Login() {
               lastname: state1.lastname,
               count: 0,
               total: 0,
-              product_data: []
+              product_data: [],
             });
-            
           } catch (error) {
-            console.error('Error:', error);
+            console.error("Error:", error);
           }
-          
         } else {
           const jsonResponse = await response.json();
-  
+
           // Update the user context with existing cart details
           defaultContext.updateUser({
             email: state1.email,
@@ -102,63 +103,74 @@ function Login() {
             lastname: jsonResponse.lastname,
             count: jsonResponse.count,
             total: jsonResponse.total,
-            product_data: jsonResponse.product_data
+            product_data: jsonResponse.product_data,
           });
-          
         }
-        
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
-  
     } else {
-      alert('invalid input');
+      alert("invalid input");
     }
   };
-  
 
   const defaultContext = useContext(UserContext);
 
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <span>
-          <Rb.Form.Label>
-            <p>First Name</p>
-          </Rb.Form.Label>
+    <div className="container w-50 mx-auto mt-5 mb-5">
+      <div className="header">
+        <p>
+          <i className="fas fa-home me-3"></i> Welcome, it’s nice to see you...
+        </p>
+      </div>
+      <Form onSubmit={onSubmit}>
+        <div className="label">
+          <Form.Label>First Name</Form.Label>
+        </div>
 
+        <div className="field">
           <input
             type="input"
             id="firstname"
-            placeholder="Firstname"
+            placeholder="First name"
             onChange={(evt) => handleInputChange(evt)}
           />
-          {errors.firstname ? <span style={{ color: 'red' }}>{errors.firstname}</span> : null}
-        </span>
-        <span>
-          <Rb.Form.Label>
-            <p>Last name</p>
-          </Rb.Form.Label>
+          {errors.firstname ? (
+            <span style={{ color: "red" }}>{errors.firstname}</span>
+          ) : null}
+        </div>
+
+        <div className="label">
+          <Form.Label>Last Name</Form.Label>
+        </div>
+
+        <div className="field">
           <input
             type="input"
             id="lastname"
-            placeholder="lastname"
+            placeholder="Last name"
             onChange={(evt) => handleInputChange(evt)}
           />
-          {errors.lastname ? <span style={{ color: 'red' }}>{errors.lastname}</span> : null}
-        </span>
-        <span>
-          <Rb.Form.Label>
-            <p>Email address</p>
-          </Rb.Form.Label>
+          {errors.lastname ? (
+            <span style={{ color: "red" }}>{errors.lastname}</span>
+          ) : null}
+        </div>
+
+        <div className="label">
+          <Form.Label>Email</Form.Label>
+        </div>
+
+        <div className="field">
           <input
             type="email"
             id="email"
             placeholder="email@example.com"
             onChange={(evt) => handleInputChange(evt)}
           />
-          {errors.email ? <span style={{ color: 'red' }}>{errors.email}</span> : null}
-        </span>
+          {errors.email ? (
+            <span style={{ color: "red" }}>{errors.email}</span>
+          ) : null}
+        </div>
         {
           <button type="submit" className="btn btn-primary">
             Submit
@@ -167,8 +179,7 @@ function Login() {
         <button type="reset" className="btn btn-danger">
           Cancel
         </button>
-      </form>
-
+      </Form>
     </div>
   );
 }
