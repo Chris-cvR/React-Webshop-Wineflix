@@ -14,7 +14,7 @@ import { UserContext } from './context/Usercontext';
 
 function App() {
 
-  const [user, setUser] = useState({ firstname: '', lastname: '', email: '' });
+  const [user, setUser] = useState({ firstname: '', lastname: '', email: '', product_data: [], count: 0, total: 0 });
 
 
     // Define the updateUser function

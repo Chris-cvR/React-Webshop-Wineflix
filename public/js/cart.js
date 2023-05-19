@@ -1,12 +1,15 @@
 // Cart script
+import { userContext } from 'src\\context\\Usercontext.tsx';
 
 
 async function fetchCart() {
-  let id = localStorage.getItem("user_id");
+  // let id = localStorage.getItem("user_id");
+  let id = userContext.email;
   let user_cart = {}
 
   try {
     const response = await fetch(`http://127.0.0.1:8888/api/cart/${id}`);
+    console.log(response)
     if (response.ok) {
       const data = await response.json();
       user_cart = data;

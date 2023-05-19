@@ -1,9 +1,13 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../context/Usercontext";
+import {MyVerticallyCenteredModal} from "./ATCModal"
+
 
 function Navbar() {
   const { user } = useContext(UserContext);
+  const [modalShow, setModalShow] = React.useState(false);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light primary py-3 border border-secondary">
       <div className="container-fluid">
@@ -120,8 +124,7 @@ function Navbar() {
           <a
             className="nav-link"
             href="#"
-            data-toggle="modal"
-            data-target="#cartModal"
+            onClick={() => setModalShow(true)}
           >
             <div id="cart">
               <svg
@@ -199,6 +202,10 @@ function Navbar() {
           </ul>
         </div>
       </div>
+      <MyVerticallyCenteredModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
     </nav>
   );
 }

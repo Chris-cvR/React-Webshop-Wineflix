@@ -55,33 +55,67 @@ function Login() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const isValid = validate();
+    
     if (isValid) {
-      const response = await fetch(`http://localhost:8888/api/cart/${state1.email}`);
-      if (response.status === 404) {
-        try {
-          await fetch(`http://localhost:8888/api/cart/${state1.email}`, {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+      try {
+        const response = await fetch(`http://localhost:8888/api/cart/${state1.email}`);
+        
+        if (response.status === 404) {
+          try {
+            await fetch(`http://localhost:8888/api/cart/${state1.email}`, {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                email: state1.email,
+                firstname: state1.firstname,
+                lastname: state1.lastname,
+                product_data: [],
+                total: 0,
+                count: 0
+              })
+            });
+            
+            // Update the user context for a new cart
+            defaultContext.updateUser({
               email: state1.email,
               firstname: state1.firstname,
               lastname: state1.lastname,
-              product_data: [],
+              count: 0,
               total: 0,
-              count: 0
-            })
+              product_data: []
+            });
+            
+          } catch (error) {
+            console.error('Error:', error);
+          }
+          
+        } else {
+          const jsonResponse = await response.json();
+  
+          // Update the user context with existing cart details
+          defaultContext.updateUser({
+            email: state1.email,
+            firstname: jsonResponse.firstname,
+            lastname: jsonResponse.lastname,
+            count: jsonResponse.count,
+            total: jsonResponse.total,
+            product_data: jsonResponse.product_data
           });
-        } catch (error) {
-          console.error('Error:', error);
+          
         }
+        
+      } catch (error) {
+        console.error('Error:', error);
       }
-      // Update the user context here
-      defaultContext.updateUser({ firstname: state1.firstname, lastname: state1.lastname, email: state1.email });
-    } else alert('invalid input');
+  
+    } else {
+      alert('invalid input');
+    }
   };
+  
 
   const defaultContext = useContext(UserContext);
 
