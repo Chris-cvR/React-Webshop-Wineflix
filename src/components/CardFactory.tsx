@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
+import { UserContext } from "../context/Usercontext";
 
 interface IProduct {
   brand: string;
@@ -25,22 +26,21 @@ const options = {
   navText: ["<", ">"],
   smartSpeed: 1000,
   responsive: {
-      0: {
-          items: 1,
-      },
-      400: {
-          items: 1,
-      },
-      600: {
-          items: 1,
-      },
-      700: {
-          items: 2,
-      },
-      1000: {
-          items: 3,
-
-      }
+    0: {
+      items: 1,
+    },
+    400: {
+      items: 1,
+    },
+    600: {
+      items: 1,
+    },
+    700: {
+      items: 2,
+    },
+    1000: {
+      items: 3,
+    },
   },
 };
 
@@ -49,11 +49,11 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [myArray, setMyArray] = useState<string[]>([]);
   const [error, setError] = useState(false);
-
+  const { user, updateUser } = useContext(UserContext);
 
   useEffect(() => {
     fetchData();
-  }, [myArray]);
+  }, [myArray, user]);
 
   const fetchData = async (): Promise<any> => {
     setIsLoading(true);
@@ -78,23 +78,89 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
 
   function addToArray(str: string): void {
     // Extract the filter type from the new filter string
-    const [type] = str.split('=');
-  
+    const [type] = str.split("=");
+
     // Remove any existing filter of the same type
-    setMyArray(prevArray => prevArray.filter(item => !item.startsWith(`${type}=`)));
-  
+    setMyArray((prevArray) =>
+      prevArray.filter((item) => !item.startsWith(`${type}=`))
+    );
+
     // Add the new filter
     setMyArray([...myArray, str]);
   }
-  
 
   function removeFromArray(str: string): void {
     setMyArray(myArray.filter((item) => item !== str));
   }
 
-  function addToCart(id: any): void {
-    throw new Error("Function not implemented.");
+  function addToCart(id: number): void {
+    const existingProductIndex = user.product_data.findIndex((product) => product.id === id);
+    
+    if (existingProductIndex !== -1) {
+      // Product already exists, increase quantity and update total price
+      const updatedProductData = [...user.product_data];
+      const existingProduct = updatedProductData[existingProductIndex];
+      const updatedQuantity = existingProduct.quantity + 1;
+      const updatedTotal = user.total + existingProduct.price;
+      updatedProductData[existingProductIndex] = {
+        ...existingProduct,
+        quantity: updatedQuantity,
+      };
+      
+      updateUser({
+        ...user,
+        product_data: updatedProductData,
+        count: user.count + 1,
+        total: updatedTotal,
+      });
+      
+    } else {
+      // Product doesn't exist yet, fetch product data and add to cart
+      fetch(`http://localhost:8888/api/products?id=${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          const newProductData = { ...data[0], quantity: 1 };
+          const updatedProductData = [...user.product_data, { ...newProductData }];
+          const updatedCount = user.count + 1;
+          const updatedTotal = user.total + newProductData.price;
+          
+          fetch(`http://localhost:8888/api/cart/${user.email}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              total: updatedTotal,
+              count: updatedProductData.length,
+              product_data: updatedProductData,
+            }),
+          })
+            .then((response) => {
+              if (response.status === 404) {
+                fetch(`http://localhost:8888/api/cart/${user.email}`, {
+                  method: "POST", 
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    total: updatedTotal,
+                    count: updatedProductData.length, 
+                    product_data: updatedProductData
+                  }) 
+                })
+                .then((response) => response.json())
+                .then((data) => console.log(data))
+                .catch((err) => console.log(err))
+              }
+              return response.json(); 
+            })
+            .then((data) => updateUser({ ...user, product_data: updatedProductData, count: updatedCount, total: updatedTotal }))
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
+    }
   }
+  
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -194,8 +260,8 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
                       removeFromArray("&country=Italy");
                     }
                   }}
-                  checked={myArray.includes("&country=Italy")}               
-                  />
+                  checked={myArray.includes("&country=Italy")}
+                />
                 <label htmlFor="Italy">Italy</label>
               </div>
 
@@ -213,7 +279,7 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
                       removeFromArray("&category=Red");
                     }
                   }}
-                  checked={myArray.includes("&category=Red")}               
+                  checked={myArray.includes("&category=Red")}
                 />
 
                 <label htmlFor="red">Red</label>
@@ -232,7 +298,7 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
                       removeFromArray("&category=White");
                     }
                   }}
-                  checked={myArray.includes("&category=White")}               
+                  checked={myArray.includes("&category=White")}
                 />
                 <label htmlFor="white">White</label>
               </div>
@@ -250,7 +316,7 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
                       removeFromArray("&category=Sparkling");
                     }
                   }}
-                  checked={myArray.includes("&category=Sparkling")}               
+                  checked={myArray.includes("&category=Sparkling")}
                 />
                 <label htmlFor="sparkling">Sparkling</label>
               </div>
@@ -269,7 +335,7 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
                       removeFromArray("&year=2014");
                     }
                   }}
-                  checked={myArray.includes("&year=2014")}               
+                  checked={myArray.includes("&year=2014")}
                 />
 
                 <label htmlFor="2014">2014</label>
@@ -288,7 +354,7 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
                       removeFromArray("&year=2016");
                     }
                   }}
-                  checked={myArray.includes("&year=2016")}               
+                  checked={myArray.includes("&year=2016")}
                 />
                 <label htmlFor="2016">2016</label>
               </div>
@@ -306,7 +372,7 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
                       removeFromArray("&year=2017");
                     }
                   }}
-                  checked={myArray.includes("&year=2017")}               
+                  checked={myArray.includes("&year=2017")}
                 />
                 <label htmlFor="2017">2017</label>
               </div>
@@ -324,7 +390,7 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
                       removeFromArray("&year=2019");
                     }
                   }}
-                  checked={myArray.includes("&year=2019")}               
+                  checked={myArray.includes("&year=2019")}
                 />
                 <label htmlFor="2019">2019</label>
               </div>
@@ -342,7 +408,7 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
                       removeFromArray("&year=2020");
                     }
                   }}
-                  checked={myArray.includes("&year=2020")}               
+                  checked={myArray.includes("&year=2020")}
                 />
                 <label htmlFor="2020">2020</label>
               </div>
@@ -360,51 +426,50 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
                       removeFromArray("&year=2021");
                     }
                   }}
-                  checked={myArray.includes("&year=2021")}               
+                  checked={myArray.includes("&year=2021")}
                 />
                 <label htmlFor="2021">2021</label>
               </div>
             </div>
           </div>
-          <div id="grid-container" className={error ? 'show-error' : ''}>
-          {products.length > 0 ? (
-            products.map((product: IProduct) => {
-              const { id, image, name, price, description } = product;
+          <div id="grid-container" className={error ? "show-error" : ""}>
+            {products.length > 0 ? (
+              products.map((product: IProduct) => {
+                const { id, image, name, price, description } = product;
 
-              return (
-                <div key={id} className="card">
-                  <div className="card-body">
-                    <NavLink className="nav-link" to={`/product/${id}`}>
-                      <div>
-                        <img
-                          className="mb-5"
-                          src={`${image}`}
-                          alt={`${name}`}
-                        />
-                        <h5 className="card-title">{`${name}`}</h5>
-                      </div>
-                    </NavLink>
-                    <h5 className="card-price">{`${price}`} DKK</h5>
-                    <div className="card-text">{`${description}`}</div>
-                    <button
-                      className="basket-button"
-                      onClick={() => addToCart(id)}
-                      data-pid={id}
-                    >
-                      Add to basket
-                    </button>
+                return (
+                  <div key={id} className="card">
+                    <div className="card-body">
+                      <NavLink className="nav-link" to={`/product/${id}`}>
+                        <div>
+                          <img
+                            className="mb-5"
+                            src={`${image}`}
+                            alt={`${name}`}
+                          />
+                          <h5 className="card-title">{`${name}`}</h5>
+                        </div>
+                      </NavLink>
+                      <h5 className="card-price">{`${price}`} DKK</h5>
+                      <div className="card-text">{`${description}`}</div>
+                      <button
+                        className="basket-button"
+                        onClick={() => addToCart(id)}
+                        data-pid={id}
+                      >
+                        Add to basket
+                      </button>
+                    </div>
                   </div>
+                );
+              })
+            ) : (
+              <div>
+                <div className="container mx-auto mt-5 mb-5">
+                  <p id="error-message">No products match your criteria!</p>
                 </div>
-              );
-            })
-          ) : (
-            <div>
-            <div className="container mx-auto mt-5 mb-5">
-            <p id="error-message">No products match your criteria!</p>
-            
-            </div>
-            </div>
-          )}
+              </div>
+            )}
           </div>
         </div>
       )}

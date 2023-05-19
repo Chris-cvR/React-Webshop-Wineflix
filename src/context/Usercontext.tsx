@@ -1,6 +1,7 @@
 import React from 'react';
+import { SHA256 } from "crypto-js";
 
-interface ProductData {
+export interface ProductData {
   brand: string;
   description: string;
   id: number;
@@ -15,7 +16,7 @@ interface ProductData {
   quantity: number;
 }
 
-type User = {
+export type User = {
   firstname: string;
   lastname: string;
   email: string;
@@ -32,7 +33,13 @@ type ContextProps = {
 };
 
 
+
+export function generateHash(userAgent: string): string {
+  return SHA256(userAgent).toString();
+}
+
+
 export const UserContext = React.createContext<ContextProps>({
-  user: { firstname: '', lastname: '', email: '', product_data: [], count: 0, total: 0 },
+  user: { firstname: '', lastname: '', email: generateHash(navigator.userAgent), product_data: [], count: 0, total: 0 },
   updateUser: () => {},
 });

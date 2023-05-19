@@ -1,4 +1,4 @@
-import React, {useState, createContext } from "react";
+import React, {useState, useEffect} from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from "./components/Home";
@@ -7,25 +7,41 @@ import Footer from "./components/Footer";
 import Product from "./components/Product"
 import Login from "./components/Login";
 import Catalogue from "./components/Catalogue";
-import { UserContext } from './context/Usercontext';
-
-
-
+import { UserContext, generateHash } from './context/Usercontext';
 
 function App() {
 
-  const [user, setUser] = useState({ firstname: '', lastname: '', email: '', product_data: [], count: 0, total: 0 });
+  const [user, setUser] = useState({ firstname: '', lastname: '', email: generateHash(navigator.userAgent), product_data: [], count: 0, total: 0 });
 
+  // Define the updateUser function
+  const updateUser = (user: any) => {
+    setUser(user);
+  };
 
-    // Define the updateUser function
-    const updateUser = (user: any) => {
-      setUser(user);
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const response = await fetch(`http://localhost:8888/api/cart/${user.email}`);
+            if (response.ok) {
+                const data = await response.json();
+                updateUser({
+                    ...user,
+                    product_data: data.product_data,
+                    count: data.count,
+                    total: data.total
+                });
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
+    fetchData();
+  }, []);
 
   return (
     <div className="App">
-      <BrowserRouter>
       <UserContext.Provider value={{ user, updateUser }}>
+      <BrowserRouter>
         <Navbar />
         <Routes>
           <Route path='/' element={<Home></Home>}></Route>
@@ -33,9 +49,9 @@ function App() {
           <Route path='/catalogue' element={<Catalogue></Catalogue>}></Route>
           <Route path='/product/:id' element={<Product></Product>}></Route>
         </Routes>
-        </UserContext.Provider>
         <Footer />
       </BrowserRouter>
+      </UserContext.Provider>
     </div>
   );
 }

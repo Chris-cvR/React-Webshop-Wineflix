@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../context/Usercontext";
-import {MyVerticallyCenteredModal} from "./ATCModal"
+import { CartModal } from "./CartModal"
 
 
 function Navbar() {
@@ -202,7 +202,7 @@ function Navbar() {
           </ul>
         </div>
       </div>
-      <MyVerticallyCenteredModal
+      <CartModal
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
