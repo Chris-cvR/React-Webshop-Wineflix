@@ -97,7 +97,6 @@ fetch('/api/products')
           }
       }      
       });
-    addUserName();
 
 
 

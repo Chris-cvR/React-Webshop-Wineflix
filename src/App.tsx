@@ -7,31 +7,33 @@ import Footer from "./components/Footer";
 import Product from "./components/Product"
 import Login from "./components/Login";
 import Catalogue from "./components/Catalogue";
-import  {userContext, user} from './context/Usercontext';
-
-export const UserContext = createContext<userContext>({
-  user: { firstname :"" , lastname: "", email: ""},
-
-updateUser : () => {},
-});
-
-
+import { UserContext } from './context/Usercontext';
 
 
 
 
 function App() {
+
+  const [user, setUser] = useState({ firstname: '', lastname: '', email: '' });
+
+
+    // Define the updateUser function
+    const updateUser = (user: any) => {
+      setUser(user);
+    };
+
   return (
     <div className="App">
       <BrowserRouter>
+      <UserContext.Provider value={{ user, updateUser }}>
         <Navbar />
         <Routes>
           <Route path='/' element={<Home></Home>}></Route>
           <Route path='/login' element={<Login></Login>}></Route>
           <Route path='/catalogue' element={<Catalogue></Catalogue>}></Route>
           <Route path='/product/:id' element={<Product></Product>}></Route>
-
         </Routes>
+        </UserContext.Provider>
         <Footer />
       </BrowserRouter>
     </div>

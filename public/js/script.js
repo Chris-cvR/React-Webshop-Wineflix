@@ -29,7 +29,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
       }      
       });
   });
-  addUserName();
 
 });
 

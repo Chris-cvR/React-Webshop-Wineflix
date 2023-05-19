@@ -6,14 +6,5 @@ function store() {
     
   }
      
-      //document.body.onload = addUserName(); // attaching the event handler- addUserName function​​
-      function addUserName() {
-      const userName = localStorage.user_id;
-       if (userName !== undefined) {
-         document.getElementById("messagename").innerHTML =
-         "Welcome, " + userName;
-         document.getElementById("cartModalLabel").innerHTML =
-         userName + "'s basket"
-        }
-      }
+
  
