@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
 import { UserContext } from "../context/Usercontext";
+import { FlexModal } from "./FlexModal";
 
 interface IProduct {
   brand: string;
@@ -50,6 +51,8 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
   const [myArray, setMyArray] = useState<string[]>([]);
   const [error, setError] = useState(false);
   const { user, updateUser } = useContext(UserContext);
+  const [showModal, setShowModal] = useState(false);
+
 
   useEffect(() => {
     fetchData();
@@ -94,8 +97,10 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
   }
 
   function addToCart(id: number): void {
-    const existingProductIndex = user.product_data.findIndex((product) => product.id === id);
-    
+    const existingProductIndex = user.product_data.findIndex(
+      (product) => product.id === id
+    );
+
     if (existingProductIndex !== -1) {
       // Product already exists, increase quantity and update total price
       const updatedProductData = [...user.product_data];
@@ -106,24 +111,26 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
         ...existingProduct,
         quantity: updatedQuantity,
       };
-      
+
       updateUser({
         ...user,
         product_data: updatedProductData,
         count: user.count + 1,
         total: updatedTotal,
       });
-      
     } else {
       // Product doesn't exist yet, fetch product data and add to cart
       fetch(`http://localhost:8888/api/products?id=${id}`)
         .then((response) => response.json())
         .then((data) => {
           const newProductData = { ...data[0], quantity: 1 };
-          const updatedProductData = [...user.product_data, { ...newProductData }];
+          const updatedProductData = [
+            ...user.product_data,
+            { ...newProductData },
+          ];
           const updatedCount = user.count + 1;
           const updatedTotal = user.total + newProductData.price;
-          
+
           fetch(`http://localhost:8888/api/cart/${user.email}`, {
             method: "PUT",
             headers: {
@@ -138,29 +145,35 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
             .then((response) => {
               if (response.status === 404) {
                 fetch(`http://localhost:8888/api/cart/${user.email}`, {
-                  method: "POST", 
+                  method: "POST",
                   headers: {
                     "Content-Type": "application/json",
                   },
                   body: JSON.stringify({
                     total: updatedTotal,
-                    count: updatedProductData.length, 
-                    product_data: updatedProductData
-                  }) 
+                    count: updatedProductData.length,
+                    product_data: updatedProductData,
+                  }),
                 })
-                .then((response) => response.json())
-                .then((data) => console.log(data))
-                .catch((err) => console.log(err))
+                  .then((response) => response.json())
+                  .then((data) => console.log(data))
+                  .catch((err) => console.log(err));
               }
-              return response.json(); 
+              return response.json();
             })
-            .then((data) => updateUser({ ...user, product_data: updatedProductData, count: updatedCount, total: updatedTotal }))
+            .then((data) =>
+              updateUser({
+                ...user,
+                product_data: updatedProductData,
+                count: updatedCount,
+                total: updatedTotal,
+              })
+            )
             .catch((err) => console.log(err));
         })
         .catch((err) => console.log(err));
     }
   }
-  
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -186,7 +199,10 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
                   <div className="card-text">{`${description}`}</div>
                   <button
                     className="basket-button"
-                    onClick={() => addToCart(id)}
+                    onClick={() => {
+                      addToCart(id);
+                      setShowModal(true);
+                    }}
                     data-pid={id}
                   >
                     Add to basket
@@ -473,8 +489,18 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
           </div>
         </div>
       )}
+      {showModal && (
+  <FlexModal
+    show={showModal}
+    onHide={() => setShowModal(false)}
+    headline="Item added to cart!"
+    body="Your item has been added to the shopping cart."
+  />
+)}
+
     </>
   );
 }
+
 
 export default CardFactory;

@@ -9,7 +9,7 @@ interface ModalProps {
   body: string;
 }
 
-function FlexModal(props: ModalProps) {
+export function FlexModal(props: ModalProps) {
   return (
     <Modal
       {...props}

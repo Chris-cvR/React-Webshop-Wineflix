@@ -8,6 +8,7 @@ import Product from "./components/Product"
 import Login from "./components/Login";
 import Catalogue from "./components/Catalogue";
 import { UserContext, generateHash } from './context/Usercontext';
+import { FlexModal } from './components/FlexModal'
 
 function App() {
 
