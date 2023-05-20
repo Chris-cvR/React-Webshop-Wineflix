@@ -77,6 +77,7 @@ function Product() {
               total: updatedTotal,
               count: updatedProductData.length,
               product_data: updatedProductData,
+              ...(user.firstname && user.lastname ? { firstname: user.firstname, lastname: user.lastname } : {})
             }),
           })
             .then((response) => {
@@ -90,6 +91,7 @@ function Product() {
                     total: updatedTotal,
                     count: updatedProductData.length,
                     product_data: updatedProductData,
+                    ...(user.firstname && user.lastname ? { firstname: user.firstname, lastname: user.lastname } : {})
                   }),
                 })
                   .then((response) => response.json())

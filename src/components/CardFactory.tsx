@@ -140,6 +140,7 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
               total: updatedTotal,
               count: updatedProductData.length,
               product_data: updatedProductData,
+              ...(user.firstname && user.lastname ? { firstname: user.firstname, lastname: user.lastname } : {})
             }),
           })
             .then((response) => {
@@ -153,6 +154,7 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
                     total: updatedTotal,
                     count: updatedProductData.length,
                     product_data: updatedProductData,
+                    ...(user.firstname && user.lastname ? { firstname: user.firstname, lastname: user.lastname } : {})
                   }),
                 })
                   .then((response) => response.json())

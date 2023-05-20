@@ -56,6 +56,8 @@ interface ProductData {
             total: updatedUser.total,
             count: updatedUser.product_data.length,
             product_data: updatedUser.product_data,
+            firstname: user.firstname,
+            lastname: user.lastname
           }),
           headers: {
             "Content-Type": "application/json",
