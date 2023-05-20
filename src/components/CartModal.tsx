@@ -99,7 +99,7 @@ interface ProductData {
     return (
       <Modal {...props} size="lg" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Your cart {user.firstname}</Modal.Title>
+          <Modal.Title>Your cart</Modal.Title>
         </Modal.Header>
         {cartItems.length > 0 ? (
           <Modal.Body>
