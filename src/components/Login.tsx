@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { UserContext } from "../context/Usercontext";
 import * as Rb from "react-bootstrap";
 import { Row, Col, Button, Form } from "react-bootstrap";
@@ -176,9 +177,9 @@ function Login() {
             Submit
           </button>
         }
-        <button type="reset" className="btn btn-danger">
+        <NavLink type="reset" className="btn btn-danger nav-link" to="/">
           Cancel
-        </button>
+        </NavLink>
       </Form>
     </div>
   );
