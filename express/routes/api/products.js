@@ -87,4 +87,34 @@ router.get('/api/products', async (req, res) => {
   }
 });
 
+router.get('/api/products/:attribute', async (req, res) => {
+  try {
+    const products = await readProducts();
+    
+    const attribute = req.params.attribute;
+    
+    if (!products || !attribute) {
+      return res.status(400).json({ message: 'Missing products or attribute parameter.'})
+    }
+    
+    const attributesSet = new Set();
+    
+    for (let product of products) {
+      if (product[attribute]) {
+        attributesSet.add(product[attribute]);
+      }
+    }
+    
+    if (attributesSet.size === 0) {
+      return res.status(404).json({ message: `No ${attribute} found.`});
+    }
+    
+    res.json([...attributesSet]);
+  } catch(error) {
+    console.error('Error getting attribute values', error);
+    res.status(500).json({ message: 'Error getting attribute values'});
+  }
+});
+
+
 module.exports = router;
