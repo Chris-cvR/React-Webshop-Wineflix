@@ -327,3 +327,29 @@ body {
   
 }
 
+input[type="checkbox"] {
+  /* CSS styles for checkboxes */
+
+  /* Hide the browser's default checkbox */
+  position: absolute;
+  opacity: 20;
+  cursor: pointer;
+  height: 0;
+  width: 0; 
+
+}
+
+input[type="checkbox"] + label {
+  margin-left: 15px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label {
+  font-weight: bold;
+}
+
+input[type="checkbox"]:hover + label {
+  color: #9d9d9d;
+}
+
