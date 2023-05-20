@@ -63,12 +63,12 @@ function Login() {
     if (isValid) {
       try {
         const response = await fetch(
-          `http://localhost:8888/api/cart/${state1.email}`
+          `http://localhost:8888/api/account/${state1.email}`
         );
 
         if (response.status === 404) {
           try {
-            await fetch(`http://localhost:8888/api/cart/${state1.email}`, {
+            await fetch(`http://localhost:8888/api/account/${state1.email}`, {
               method: "POST",
               headers: {
                 Accept: "application/json",

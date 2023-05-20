@@ -68,7 +68,7 @@ function Product() {
           const updatedCount = user.count + 1;
           const updatedTotal = user.total + newProductData.price;
 
-          fetch(`http://localhost:8888/api/cart/${user.email}`, {
+          fetch(`http://localhost:8888/api/account/${user.email}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
@@ -81,7 +81,7 @@ function Product() {
           })
             .then((response) => {
               if (response.status === 404) {
-                fetch(`http://localhost:8888/api/cart/${user.email}`, {
+                fetch(`http://localhost:8888/api/account/${user.email}`, {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",
