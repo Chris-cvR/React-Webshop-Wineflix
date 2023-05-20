@@ -184,6 +184,20 @@ body {
     background-color: #9D2626;
     }
 
+  button[type=reset] {
+      
+      color: #fff7f7;
+      padding: 7px 20px;
+      margin: 8px 0;
+      border: 1px solid #373737;
+      border-radius: 0px;
+      cursor: pointer;
+      width: 100%;
+    }
+  
+  button[type=reset]:hover {
+      background-color: #9D2626;
+      }
 
 
   .basket-button {
@@ -268,3 +282,48 @@ body {
 .primary-button:hover {
   color:white;
 }
+
+.form-control {
+  margin-bottom: 50px;
+}
+
+.field {
+  width: 100%;
+  height: 56px;
+  border-radius: 4px;
+  position: relative;
+  background-color: rgba(255,255,255,0.3);
+  transition: 0.3s all;
+}
+
+
+.field{
+  width: 100%;
+  height: 80px;
+  
+}
+
+.field input {
+  width: 100%;
+  height: 40px;
+  padding: 20px 20px;
+  border-width: thin;
+  border-style: solid;
+  border-color: rgb(160, 160, 160);
+  font-size: 16px;
+  font-weight: 200;
+  background-color: transparent;
+  
+  
+}
+.header{
+  width: 100%;
+  height: 60px;
+
+}
+
+.label{
+  padding-top: 5px;
+  
+}
+
