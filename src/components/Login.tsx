@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/Usercontext";
 import * as Rb from "react-bootstrap";
 import { Row, Col, Button, Form } from "react-bootstrap";
@@ -54,6 +54,8 @@ function Login() {
     return !vErrors.firstname && !vErrors.firstname && !vErrors.email;
   };
 
+  const navigate = useNavigate();
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const isValid = validate();
@@ -107,6 +109,7 @@ function Login() {
             product_data: jsonResponse.product_data,
           });
         }
+        navigate('/');
       } catch (error) {
         console.error("Error:", error);
       }
