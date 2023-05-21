@@ -53,7 +53,6 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
   const { user, updateUser } = useContext(UserContext);
   const [showModal, setShowModal] = useState(false);
 
-
   useEffect(() => {
     fetchData();
   }, [myArray, user]);
@@ -111,13 +110,31 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
         ...existingProduct,
         quantity: updatedQuantity,
       };
-
-      updateUser({
-        ...user,
-        product_data: updatedProductData,
-        count: user.count + 1,
-        total: updatedTotal,
-      });
+    
+      fetch(`http://localhost:8888/api/cart/${user.email}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          total: updatedTotal,
+          count: updatedProductData.length,
+          product_data: updatedProductData,
+          ...(user.firstname && user.lastname
+            ? { firstname: user.firstname, lastname: user.lastname }
+            : {}),
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) =>
+          updateUser({
+            ...user,
+            product_data: updatedProductData,
+            count: user.count + 1,
+            total: updatedTotal,
+          })
+        )
+        .catch((err) => console.log(err));    
     } else {
       // Product doesn't exist yet, fetch product data and add to cart
       fetch(`http://localhost:8888/api/products?id=${id}`)
@@ -140,7 +157,9 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
               total: updatedTotal,
               count: updatedProductData.length,
               product_data: updatedProductData,
-              ...(user.firstname && user.lastname ? { firstname: user.firstname, lastname: user.lastname } : {})
+              ...(user.firstname && user.lastname
+                ? { firstname: user.firstname, lastname: user.lastname }
+                : {}),
             }),
           })
             .then((response) => {
@@ -154,7 +173,9 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
                     total: updatedTotal,
                     count: updatedProductData.length,
                     product_data: updatedProductData,
-                    ...(user.firstname && user.lastname ? { firstname: user.firstname, lastname: user.lastname } : {})
+                    ...(user.firstname && user.lastname
+                      ? { firstname: user.firstname, lastname: user.lastname }
+                      : {}),
                   }),
                 })
                   .then((response) => response.json())
@@ -472,7 +493,10 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
                       <div className="card-text">{`${description}`}</div>
                       <button
                         className="basket-button"
-                        onClick={() => addToCart(id)}
+                        onClick={() => {
+                          addToCart(id);
+                          setShowModal(true);
+                        }}
                         data-pid={id}
                       >
                         Add to basket
@@ -492,17 +516,15 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
         </div>
       )}
       {showModal && (
-  <FlexModal
-    show={showModal}
-    onHide={() => setShowModal(false)}
-    headline="Item added to cart!"
-    body="Your item has been added to the shopping cart."
-  />
-)}
-
+        <FlexModal
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          headline="Item added to cart!"
+          body="Your item has been added to the shopping cart."
+        />
+      )}
     </>
   );
 }
-
 
 export default CardFactory;
