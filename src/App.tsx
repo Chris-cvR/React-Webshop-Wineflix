@@ -22,7 +22,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
         try {
-            const response = await fetch(`http://localhost:8888/api/cart/${user.email}`);
+            const response = await fetch(`http://localhost:8888/api/account/${user.email}`);
             if (response.ok) {
                 const data = await response.json();
                 updateUser({

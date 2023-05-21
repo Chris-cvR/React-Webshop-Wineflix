@@ -15,7 +15,7 @@ async function readCartData() {
   }
 }
 
-router.get('/api/cart/', async (req, res) => {
+router.get('/api/account/', async (req, res) => {
     try {
       const cartData = await readCartData();
       res.json(cartData);
@@ -24,7 +24,7 @@ router.get('/api/cart/', async (req, res) => {
     }
   });
   
-  router.get('/api/cart/:id', async (req, res) => {
+  router.get('/api/account/:id', async (req, res) => {
     const { id } = req.params;
   
     try {
@@ -40,7 +40,7 @@ router.get('/api/cart/', async (req, res) => {
     }
   });
   
-  router.post('/api/cart/:id', async (req, res) => {
+  router.post('/api/account/:id', async (req, res) => {
     const { id } = req.params;
     try {
       const cartData = await readCartData();
@@ -69,7 +69,7 @@ router.get('/api/cart/', async (req, res) => {
     }
   });  
 
-  router.put('/api/cart/:id', async (req, res) => {
+  router.put('/api/account/:id', async (req, res) => {
     const { id } = req.params;
   
     try {
@@ -100,7 +100,7 @@ router.get('/api/cart/', async (req, res) => {
   }); 
   
 
-  router.delete('/api/cart/:id', async (req, res) => {
+  router.delete('/api/account/:id', async (req, res) => {
     const { id } = req.params;
     try {
       const cartData = await readCartData();

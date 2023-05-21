@@ -50,7 +50,7 @@ interface ProductData {
         };
       
         // Make the PUT request to update the cart
-        fetch(`http://localhost:8888/api/cart/${user.email}`, {
+        fetch(`http://localhost:8888/api/account/${user.email}`, {
           method: "PUT",
           body: JSON.stringify({
             total: updatedUser.total,
