@@ -4,6 +4,7 @@ import { UserContext } from "../context/Usercontext";
 import * as Rb from "react-bootstrap";
 import { Row, Col, Button, Form } from "react-bootstrap";
 import "../App.css";
+import { FlexModal } from "./FlexModal";
 
 interface FormData {
   firstname: string;
@@ -24,6 +25,8 @@ function Login() {
     email: "",
   });
   const [errors, setErrors] = React.useState<FormErrors>({});
+  const [showModal, setShowModal] = useState(false);
+  const [newUser, setNewUser] = useState(true);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -59,6 +62,7 @@ function Login() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const isValid = validate();
+    setNewUser(false); // Define he newUser variable
 
     if (isValid) {
       try {
@@ -67,6 +71,8 @@ function Login() {
         );
 
         if (response.status === 404) {
+          setNewUser(true); // Set newUser to true when the response is 404
+
           try {
             await fetch(`http://localhost:8888/api/account/${state1.email}`, {
               method: "POST",
@@ -97,6 +103,8 @@ function Login() {
             console.error("Error:", error);
           }
         } else {
+          setNewUser(false); // Set newUser to false when the response is not 404
+
           const jsonResponse = await response.json();
 
           // Update the user context with existing cart details
@@ -109,7 +117,8 @@ function Login() {
             product_data: jsonResponse.product_data,
           });
         }
-        navigate('/');
+        setShowModal(true);
+        //navigate('/');
       } catch (error) {
         console.error("Error:", error);
       }
@@ -184,6 +193,21 @@ function Login() {
           Cancel
         </NavLink>
       </Form>
+      {showModal && (
+        <FlexModal
+          body="You are now logged in, click close to be redirected to the Home page"
+          headline={
+            newUser
+              ? `Thank you for registering ${state1.firstname}!`
+              : `Welcome Back ${state1.firstname}!`
+          }
+          show={showModal}
+          onHide={() => {
+            setShowModal(false);
+            navigate("/");
+          }}
+        ></FlexModal>
+      )}
     </div>
   );
 }
