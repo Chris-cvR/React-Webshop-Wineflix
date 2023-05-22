@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/Usercontext";
-import * as Rb from "react-bootstrap";
-import { Row, Col, Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import "../App.css";
 import { FlexModal } from "./FlexModal";
 

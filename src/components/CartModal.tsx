@@ -66,7 +66,6 @@ interface ProductData {
           .then(() => {
             updateUser(updatedUser);
           })
-          .catch((err) => console.error(err));
       };
       
       

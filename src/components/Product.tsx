@@ -130,7 +130,7 @@ function Product() {
             product;
 
           return (
-            <div>
+            <div key={id}> 
               <div
                 style={{ display: "flex", backgroundColor: "white" }}
                 className="container mx-auto mt-5 mb-5"
