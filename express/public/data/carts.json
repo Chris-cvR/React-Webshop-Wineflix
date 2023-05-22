@@ -1,63 +1,9 @@
 {
   "cart_data": {
-    "theo@itu.dk": {
-      "total": 279,
-      "count": 2,
-      "product_data": [
-        {
-          "brand": "La Vierge Wines",
-          "description": "A Chardonnay from the top shelf. The critics love it and with good reason. Jezebelle has a style of its own closer to European Chardonnay than classic overseas. Harvested over a whopping 7 times at different ripening times to give as complex a wine as possible. So good fatness but still structure and a nice balanced barrel flavour - lovely. Aromas of lime, vanilla and flowers with a light mineral flavour.",
-          "id": 14,
-          "image": "https://www.wineguys.dk/9-home_default/jezebelle-chardonnay.jpg",
-          "list_price": 129,
-          "name": "La Vierge Jezebelle Chardonnay",
-          "country": "South Africa",
-          "year": 2021,
-          "category": "White",
-          "price": 129,
-          "url": "https://www.wineguys.dk/da/vinkatalog/14-jezebelle-chardonnay-6009825450216.html",
-          "quantity": 1
-        },
-        {
-          "brand": "Rijks Cellars",
-          "description": "A modern Pinotage with lots of aroma; blackcurrant, plum and chocolate. Long finish with fine balance. Not too acidic. A super wine for the price. The wine was previously sold for DKK 199 at one of the country's largest wine merchants.\nAfter pressing, the juice is run over the grapes 3 times to extract as much flavour as possible before being aged for 18 months.\nPierre Wahl has been awarded \"Wine Maker of the Year 2016\" for his work at Rijks.",
-          "id": 3,
-          "image": "https://www.wineguys.dk/150-home_default/rijks-touch-of-oak-pinotage.jpg",
-          "list_price": 150,
-          "name": "Rijks Touch of Oak Pinotage",
-          "country": "South Africa",
-          "year": 2020,
-          "category": "Red",
-          "price": 150,
-          "url": "https://www.wineguys.dk/da/vinkatalog/3-rijks-touch-of-oak-pinotage-6009647640154.html",
-          "quantity": 1
-        }
-      ]
-    },
-    "kidfabi.97@gmail.com": {
-      "total": 179,
-      "count": 1,
-      "product_data": [
-        {
-          "brand": "Black Elephant Vintners",
-          "description": "Classic sparkling wine from Franschhoek made in the same time-consuming way as in Champagne. 75% Chardonnay and the rest Pinot Noir. Harvested overnight and chilled until the next morning to preserve the freshness of the grape. The grapes are lightly pressed and the juice fermented for 14 days before being aged for 12 months in steel tanks. Once stabilised, the wine is aged a further 27 months in bottle, where it develops its fine bubble structure.\nThe Chardonnay grape gives the wine elegance and fruitiness, while the Pinot Noir adds complexity and length to the flavour. Notes of breadcrumbs, citrus and fresh red apples. Incredibly fine bubbles with an almost mousse-like texture. Really delicious wine.",
-          "id": 202,
-          "image": "https://www.wineguys.dk/217-home_default/black-elephant-vintners-mcc-brut.jpg",
-          "list_price": 179,
-          "name": "Black Elephant Vintners MCC Brut",
-          "country": "South Africa",
-          "year": 2020,
-          "category": "Sparkling",
-          "price": 179,
-          "url": "https://www.wineguys.dk/da/vinkatalog/202-black-elephant-vintners-mcc-brut-6009820360503.html",
-          "quantity": 1
-        }
-      ]
-    },
     "abc@def.com": {
       "email": "abc@def.com",
-      "firstname": "Fabio",
-      "lastname": "Voermans",
+      "firstname": "ifyoureadthis",
+      "lastname": "giveusa12please",
       "product_data": [],
       "total": 0,
       "count": 0
