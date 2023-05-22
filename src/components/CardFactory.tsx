@@ -3,20 +3,7 @@ import { NavLink } from "react-router-dom";
 import OwlCarousel from "react-owl-carousel";
 import { UserContext } from "../context/Usercontext";
 import { FlexModal } from "./FlexModal";
-
-interface IProduct {
-  brand: string;
-  description: string;
-  id: number;
-  image: string;
-  list_price: number;
-  name: string;
-  country: string;
-  year: number;
-  category: string;
-  price: number;
-  url: string;
-}
+import { IProduct } from "../types/Iproduct";
 
 const options = {
   margin: 30,
