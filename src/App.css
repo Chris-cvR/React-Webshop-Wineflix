@@ -53,6 +53,7 @@ body {
 
 .card-text {
     max-height: 100px;
+    min-height: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: break-spaces;
