@@ -45,7 +45,7 @@ const options = {
   },
 };
 
-function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
+function CardFactory({ endpoint, carousel }: { endpoint: string; carousel: boolean }) {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [myArray, setMyArray] = useState<string[]>([]);
@@ -66,9 +66,9 @@ function CardFactory({ carousel }: { endpoint: string; carousel: boolean }) {
         filter = myArray[0].replace("&", "?");
       }
       filter += myArray.slice(1).join("");
-      const response = await fetch(
-        `http://localhost:8888/api/products${filter}`
-      );
+      const url = endpoint ? `http://localhost:8888/${endpoint}` : `http://localhost:8888/api/products${filter}`;
+
+      const response = await fetch(url);
       const data = await response.json();
       setProducts(data);
       setIsLoading(false);
