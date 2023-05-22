@@ -66,7 +66,7 @@ function CardFactory({ endpoint, carousel }: { endpoint: string; carousel: boole
         filter = myArray[0].replace("&", "?");
       }
       filter += myArray.slice(1).join("");
-      const url = endpoint ? `http://localhost:8888/${endpoint}` : `http://localhost:8888/api/products${filter}`;
+      const url = filter ? `http://localhost:8888/api/products${filter}` : `http://localhost:8888/${endpoint}`;
 
       const response = await fetch(url);
       const data = await response.json();
