@@ -354,3 +354,13 @@ input[type="checkbox"]:hover + label {
   color: #9d9d9d;
 }
 
+.btn-primary{
+  background-color:#373737;
+  border: none;
+  border-radius: 0px;
+}
+
+.btn-primary:hover{
+  background-color:#9D2626;
+}
+
