@@ -111,7 +111,7 @@ function CardFactory({ endpoint, carousel }: { endpoint: string; carousel: boole
         quantity: updatedQuantity,
       };
     
-      fetch(`http://localhost:8888/api/cart/${user.email}`, {
+      fetch(`http://localhost:8888/api/account/${user.email}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
