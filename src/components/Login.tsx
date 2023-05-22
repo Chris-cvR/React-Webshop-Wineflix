@@ -51,7 +51,7 @@ function Login() {
       vErrors.email = "Must be a valid email";
     }
     setErrors(vErrors);
-    return !vErrors.firstname && !vErrors.firstname && !vErrors.email;
+    return !vErrors.firstname && !vErrors.lastname && !vErrors.email;
   };
 
   const navigate = useNavigate();
